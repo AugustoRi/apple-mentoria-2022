@@ -16,8 +16,3 @@ export const data = {
     ["Ana", "Wesley"],
   ],
 };
-
-export const getAllStudents = () => {
-  let studentsNotFiltered = Object.values(data).flatMap((flat) => flat.flatMap((newFlat) => newFlat));
-  return studentsNotFiltered.filter((student, index) => studentsNotFiltered.indexOf(student) == index);
-};
