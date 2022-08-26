@@ -1,5 +1,7 @@
 import { data } from "../services/database/students";
 
+const pairs = [];
+
 const removeDuplicatesInArray = (arr) => {
   return arr.filter((value, index) => arr.indexOf(value) == index);
 };
@@ -25,15 +27,30 @@ const setValidPairs = (all, selected, invalidPairsForTheStudentSelected) => {
   });
 };
 
-const allStudents = getAllStudents();
+const setRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + (min));
+};
 
-allStudents.forEach((student) => {
-  const cycles = Object.values(data);
+const cycles = Object.values(data);
+
+const setPairs = (all, selected) => {
   const invalidPairs = cycles.map((cycle) => {
-    return setInvalidPairs(cycle, student);
-  })
-  .flat()
+    return setInvalidPairs(cycle, selected);
+  }).flat();
+  const validPairs = setValidPairs(all, selected, invalidPairs);
+  const pair = validPairs[setRandomNumber(0, validPairs.length)];
+  pairs.push([selected, pair]);
 
-  const validPairs = setValidPairs(allStudents, student, invalidPairs);
-  console.log(validPairs)
-});
+  const newAll = all.filter((student) => {
+    return student !== pair && student !== selected;
+  });
+  const newSelected = newAll[setRandomNumber(0, newAll.length)];
+
+  if (newAll.length >= 2) {
+    setPairs(newAll, newSelected);
+  };
+}
+
+const allStudents = getAllStudents();
+const firstStudentSelected = allStudents[setRandomNumber(0, allStudents.length)];
+setPairs(allStudents, firstStudentSelected);
