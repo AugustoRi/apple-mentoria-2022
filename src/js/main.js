@@ -23,10 +23,7 @@ const setInvalidPairs = (all, selected) => {
 
 const setValidPairs = (all, selected, invalidPairsForTheStudentSelected) => {
   return all.filter((student) => {
-    return !invalidPairsForTheStudentSelected.includes(student);
-  })
-  .filter((student) => {
-    return !student.includes(selected);
+    return !invalidPairsForTheStudentSelected.includes(student) && student !== selected;
   });
 };
 
@@ -38,7 +35,7 @@ allStudents.forEach((student) => {
     return setInvalidPairs(cycle, student);
   })
   .flat()
-  // console.log(invalidPairs)
+
   const validPairs = setValidPairs(allStudents, student, invalidPairs);
   console.log(validPairs)
 });
