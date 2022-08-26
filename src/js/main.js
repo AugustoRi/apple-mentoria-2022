@@ -10,15 +10,13 @@ const getAllStudents = () => {
 };
 
 const setInvalidPairs = (all, selected) => {
-  const invalidPairs = all.filter((teams) => {
+  return all.filter((teams) => {
     return teams.includes(selected);
   })
   .flat()
   .filter((student) => {
     return !student.includes(selected);
   });
-
-  return invalidPairs;
 };
 
 const setValidPairs = (all, selected, invalidPairsForTheStudentSelected) => {
