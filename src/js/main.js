@@ -1,55 +1,11 @@
-import { data } from "../services/database/students";
-
+import { allStudents, allArrays } from "../services/database/students";
+import { setInvalidPairs, setValidPairs } from "./setStatusPairs";
+import { prioritySequenceTopToDown, firstStudent } from "./prioritySequence";
 const pairs = [];
-
-const removeDuplicatesInArray = (arr) => {
-  return arr.filter((value, index) => arr.indexOf(value) == index);
-};
-
-const getAllStudents = () => {
-  let studentsNotFiltered = Object.values(data).flat().flat();
-  return removeDuplicatesInArray(studentsNotFiltered);
-};
-
-const getAllArrays = () => {
-  return Object.values(data).flat();
-};
-
-const setInvalidPairs = (all, selected) => {
-  return all.filter((teams) => {
-    return teams.includes(selected)
-  })
-  .flat()
-  .filter((student) => {
-    return !student.includes(selected);
-  });
-};
-
-const setValidPairs = (all, selected, invalidPairsForTheStudentSelected) => {
-  return all.filter((student) => {
-    return !invalidPairsForTheStudentSelected.includes(student) && student !== selected;
-  });
-};
 
 const setRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + (min));
 };
-
-const prioritySequenceTopToDown = (arr, allArrays) => {
-  return arr.sort((current, next) => {
-    const invalidPairsCurrent = setInvalidPairs(allArrays, current);
-    const invalidPairsNext =  setInvalidPairs(allArrays, next);
-  
-    if (invalidPairsCurrent.length < invalidPairsNext.length) {
-      return 1;
-    }
-    if (invalidPairsCurrent.length > invalidPairsNext.length) {
-      return -1;
-    };
-    return 0;
-  });
-};
-
 
 const setPairs = (all, selected, allArrays) => {
   const invalidPairs = setInvalidPairs(allArrays, selected);
@@ -76,14 +32,20 @@ const setPairs = (all, selected, allArrays) => {
     setPairs(newAll, newSelected, newAllArrays);
   };
   if (newAll.length === 1) {
-    return pairs.push(newAll)
+    return pairs.push(newAll);
   };
 };
 
-const allStudents = getAllStudents();
-const allArrays = getAllArrays();
-const studentsPrioritySequence = prioritySequenceTopToDown(allStudents, allArrays);
-console.log(studentsPrioritySequence);
+const generatePairs = document.querySelector("#generate-pairs");
 
-setPairs(allStudents, studentsPrioritySequence[0], allArrays);
+generatePairs.addEventListener("click", () => {
+  setPairs(allStudents, firstStudent, allArrays);
+  
+  pairs.forEach((pair, index) => {
+    document.body.textContent += `\n\t${index + 1}° pair = ${pair}`;
+  })
+});
+
+
+
 console.log(pairs)

@@ -1,4 +1,4 @@
-export const data = {
+const data = {
   ciclo1: [
     ["Laura", "Pedro", "João", "Vinicius"],
     ["Carlos", "Maria", "Leonardo", "Ana"],
@@ -16,3 +16,21 @@ export const data = {
     ["Ana", "Wesley"],
   ],
 };
+
+const removeDuplicatesInArray = (arr) => {
+  return arr.filter((value, index) => arr.indexOf(value) == index);
+};
+
+const getAllStudents = () => {
+  let studentsNotFiltered = Object.values(data).flat().flat();
+  return removeDuplicatesInArray(studentsNotFiltered);
+};
+
+const getAllArrays = () => {
+  return Object.values(data).flat();
+};
+
+const allStudents = getAllStudents();
+const allArrays = getAllArrays();
+
+export { allStudents, allArrays };
