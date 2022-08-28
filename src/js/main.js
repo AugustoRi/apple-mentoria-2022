@@ -52,5 +52,3 @@ generatePairs.addEventListener("click", () => {
     screen.appendChild(p);
   })
 });
-
-console.log(pairs)
