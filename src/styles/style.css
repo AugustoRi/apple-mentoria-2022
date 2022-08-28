@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 2%;
+}
+
+#app > h1 {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+#app > [type="button"] {
+  display: flex;
+  padding: 40px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#app > #pairs {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 30px;
+}

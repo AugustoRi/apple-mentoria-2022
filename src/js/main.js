@@ -1,11 +1,12 @@
 import { allStudents, allTeams } from "../services/database/students";
 import { setInvalidPairs, setValidPairs } from "./setStatusPairs";
 import { prioritySequenceTopToDown, firstStudent } from "./prioritySequence";
-const pairs = [];
 
 const setRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + (min));
 };
+
+const pairs = [];
 
 const setPairs = (allStudents, selected, allTeams) => {
   const invalidPairs = setInvalidPairs(allTeams, selected);
@@ -39,10 +40,16 @@ const setPairs = (allStudents, selected, allTeams) => {
 const generatePairs = document.querySelector("#generate-pairs");
 
 generatePairs.addEventListener("click", () => {
+  generatePairs.value = "Click again!";
+  pairs.length = 0;
   setPairs(allStudents, firstStudent, allTeams);
+  const screen = document.querySelector("#pairs");
+  screen.textContent = "";
   
   pairs.length > 0 && pairs.forEach((pair, index) => {
-    document.body.textContent += `\n\t${index + 1}° pair = ${pair}`;
+    let p = document.createElement("p");
+    p.textContent = `${index + 1}° pair = ${pair}`;
+    screen.appendChild(p);
   })
 });
 
