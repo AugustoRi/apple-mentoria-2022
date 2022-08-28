@@ -1,4 +1,4 @@
-import { allStudents, allArrays } from "../services/database/students";
+import { allStudents, allTeams } from "../services/database/students";
 import { setInvalidPairs, setValidPairs } from "./setStatusPairs";
 import { prioritySequenceTopToDown, firstStudent } from "./prioritySequence";
 const pairs = [];
@@ -7,29 +7,29 @@ const setRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min) + (min));
 };
 
-const setPairs = (all, selected, allArrays) => {
-  const invalidPairs = setInvalidPairs(allArrays, selected);
-  const validPairs = setValidPairs(all, selected, invalidPairs);
+const setPairs = (allStudents, selected, allTeams) => {
+  const invalidPairs = setInvalidPairs(allTeams, selected);
+  const validPairs = setValidPairs(allStudents, selected, invalidPairs);
   const pair = validPairs[setRandomNumber(0, validPairs.length)];
   pairs.push([selected, pair]);
 
-  const newAll = all.filter((student) => {
+  const newAll = allStudents.filter((student) => {
     return student !== selected && student !== pair;
   });
-  const newAllArrays = allArrays.map((arr) => {
-    if (arr.includes(selected)) {
-      return arr.filter((newArray) => newArray !== selected);
+  const newAllTeams = allTeams.map((team) => {
+    if (team.includes(selected)) {
+      return team.filter((newArray) => newArray !== selected);
     }
-    else if (arr.includes(pair)) {
-      return arr.filter((newArray) => newArray !== pair);
+    else if (team.includes(pair)) {
+      return team.filter((newArray) => newArray !== pair);
     }
-    return arr;
+    return team;
   });
-  const newAllPrioritySequence = prioritySequenceTopToDown(newAll, newAllArrays);
+  const newAllPrioritySequence = prioritySequenceTopToDown(newAll, newAllTeams);
   const newSelected = newAllPrioritySequence[0];
 
   if (newAll.length >= 2) {
-    setPairs(newAll, newSelected, newAllArrays);
+    setPairs(newAll, newSelected, newAllTeams);
   };
   if (newAll.length === 1) {
     return pairs.push(newAll);
@@ -39,13 +39,11 @@ const setPairs = (all, selected, allArrays) => {
 const generatePairs = document.querySelector("#generate-pairs");
 
 generatePairs.addEventListener("click", () => {
-  setPairs(allStudents, firstStudent, allArrays);
+  setPairs(allStudents, firstStudent, allTeams);
   
-  pairs.forEach((pair, index) => {
+  pairs.length > 0 && pairs.forEach((pair, index) => {
     document.body.textContent += `\n\t${index + 1}° pair = ${pair}`;
   })
 });
-
-
 
 console.log(pairs)

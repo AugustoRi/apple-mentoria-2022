@@ -1,5 +1,5 @@
-export const setInvalidPairs = (all, selected) => {
-  return all.filter((teams) => {
+export const setInvalidPairs = (allTeams, selected) => {
+  return allTeams.filter((teams) => {
     return teams.includes(selected)
   })
   .flat()
@@ -8,8 +8,8 @@ export const setInvalidPairs = (all, selected) => {
   });
 };
 
-export const setValidPairs = (all, selected, invalidPairsForTheStudentSelected) => {
-  return all.filter((student) => {
+export const setValidPairs = (allStudents, selected, invalidPairsForTheStudentSelected) => {
+  return allStudents.filter((student) => {
     return !invalidPairsForTheStudentSelected.includes(student) && student !== selected;
   });
 };

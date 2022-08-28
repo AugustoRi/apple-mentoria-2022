@@ -26,11 +26,11 @@ const getAllStudents = () => {
   return removeDuplicatesInArray(studentsNotFiltered);
 };
 
-const getAllArrays = () => {
+const getAllTeams = () => {
   return Object.values(data).flat();
 };
 
 const allStudents = getAllStudents();
-const allArrays = getAllArrays();
+const allTeams = getAllTeams();
 
-export { allStudents, allArrays };
+export { allStudents, allTeams };
